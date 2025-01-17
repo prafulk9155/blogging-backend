@@ -1,7 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
+// const db = require("./connection/db");
+
 
 
 // Configure CORS
@@ -18,6 +21,10 @@ app.use(morgan('combined'));
 //------------------------------------------------------------------------------
 
 //------------------------------- Middlewares -------------------------------
+
+
+//------------------------------- db connection -------------------------------
+require("./connection/db");
 
 
 
