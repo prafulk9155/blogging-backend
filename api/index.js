@@ -1,69 +1,44 @@
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables
 const express = require("express");
 const app = express();
-const cors = require('cors');
-const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+const cors = require("cors");
+const morgan = require("morgan");
+const fs = require("fs");
+const path = require("path");
 
-const dotenv = require("dotenv");
 const connectDB = require("./src/config/dbConnection");
 
-// Load environment variables
-dotenv.config({ path: "../.env" });
-const logStream = fs.createWriteStream(path.join(__dirname, 'storage/logs/blog_api.log'), { flags: 'a' });
+// Create a write stream for logging to a file
+const logStream = fs.createWriteStream(path.join(__dirname, "storage/logs/blog_api.log"), { flags: "a" });
 
-
-
-
-
-// Configure CORS
+// CORS configuration
 const corsOptions = {
-    origin: '*', // Allow only this domain
-    methods: ['GET', 'POST'],    // Allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
+  origin: "*", // Allow all origins (change to specific domain in production)
+  methods: ["GET", "POST"], // Allowed HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
 };
 
-// ---------------------------------Enable Libraries ---------------------------
-app.use(cors(corsOptions));
-// app.use(morgan('combined'));
+// Middleware configuration
+app.use(cors(corsOptions)); // Enable CORS
+app.use(morgan("combined", { stream: logStream })); // Logs to file
+app.use(morgan("combined")); // Logs to console
 
+// Serve log files statically
+app.use("/storage/logs", express.static(path.join(__dirname, "storage/logs")));
 
-app.use(morgan('combined', { stream: logStream })); // Logs to file
-app.use(morgan('combined')); // Logs to console
-app.use('/storage/logs', express.static(path.join(__dirname, 'storage/logs')));
-
-//------------------------------------------------------------------------------
-
-//------------------------------- Middlewares -------------------------------
-// app.use((req, res, next) => {
-//     logger.info(`Incoming request: ${req.method} ${req.url}`);
-//     next();
-//   });
-
-//------------------------------- db connection -------------------------------
-// require("./connection/db");
+// Database connection
 connectDB();
 
-
-
-
-//------------------------------- Public Routes -------------------------------
-app.get("/", (req, res) => res.send("Blogging Api on Vercel released on 15th jan 2025"));
+// Routes
+app.get("/", (req, res) => res.send("Blogging API on Vercel, released on 15th Jan 2025"));
 
 app.get("/api-test", (req, res) => {
-    res.json({
-        message: "Successfully connected with blogging api from Vercel"
-    });
+  res.json({
+    message: "Successfully connected with the blogging API from Vercel",
+  });
 });
 
-
-//------------------------------- Private Routes close -------------------------------
-
-
-
+// Start server
 app.listen(3000, () => console.log("Server ready on port 3000..."));
-
-
 
 module.exports = app;
