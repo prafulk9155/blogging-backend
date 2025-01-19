@@ -7,13 +7,13 @@ const fs = require("fs");
 const path = require("path");
 
 // Create log directory if it doesn't exist
-const logDirectory = path.join(__dirname, "storage/logs");
-if (!fs.existsSync(logDirectory)) {
-  fs.mkdirSync(logDirectory, { recursive: true });
-}
+// const logDirectory = path.join(__dirname, "storage/logs");
+// if (!fs.existsSync(logDirectory)) {
+//   fs.mkdirSync(logDirectory, { recursive: true });
+// }
 
 // Create a write stream for logging to a file
-const logStream = fs.createWriteStream(path.join(logDirectory, "blog_api.log"), { flags: "a" });
+// const logStream = fs.createWriteStream(path.join(logDirectory, "blog_api.log"), { flags: "a" });
 
 // CORS configuration
 const corsOptions = {
@@ -24,11 +24,11 @@ const corsOptions = {
 
 // Middleware configuration
 app.use(cors(corsOptions)); // Enable CORS
-app.use(morgan("combined", { stream: logStream })); // Logs to file
+// app.use(morgan("combined", { stream: logStream })); // Logs to file
 app.use(morgan("combined")); // Logs to console
 
 // Serve log files statically
-app.use("/storage/logs", express.static(logDirectory));
+// app.use("/storage/logs", express.static(logDirectory));
 
 // Database connection
 // connectDB();
@@ -43,9 +43,9 @@ app.get("/api-test", (req, res) => {
 });
 
 // Serve favicon (optional)
-app.get("/favicon.ico", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "favicon.ico"));
-});
+// app.get("/favicon.ico", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "favicon.ico"));
+// });
 
 // Start server
 app.listen(4000, () => console.log("Server ready on port 4000..."));
