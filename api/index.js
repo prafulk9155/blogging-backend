@@ -6,14 +6,8 @@ const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
 
-// Create log directory if it doesn't exist
-// const logDirectory = path.join(__dirname, "storage/logs");
-// if (!fs.existsSync(logDirectory)) {
-//   fs.mkdirSync(logDirectory, { recursive: true });
-// }
+const uploadRoutes = require('./src/route/upload'); // Use require instead of import
 
-// Create a write stream for logging to a file
-// const logStream = fs.createWriteStream(path.join(logDirectory, "blog_api.log"), { flags: "a" });
 
 // CORS configuration
 const corsOptions = {
@@ -27,11 +21,6 @@ app.use(cors(corsOptions)); // Enable CORS
 // app.use(morgan("combined", { stream: logStream })); // Logs to file
 app.use(morgan("combined")); // Logs to console
 
-// Serve log files statically
-// app.use("/storage/logs", express.static(logDirectory));
-
-// Database connection
-// connectDB();
 
 // Routes
 app.get("/", (req, res) => res.send("Blogging API on Vercel, released on 20Th Jan 2025"));
@@ -42,10 +31,12 @@ app.get("/api-test", (req, res) => {
   });
 });
 
-// Serve favicon (optional)
-// app.get("/favicon.ico", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "favicon.ico"));
-// });
+
+// ------------------------------------------- route path -------------------------------------------
+
+
+app.use('/api', uploadRoutes);
+
 
 // Start server
 app.listen(4000, () => console.log("Server ready on port 4000..."));
