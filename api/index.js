@@ -3,13 +3,11 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
-// const db = require("./connection/db");
 const fs = require('fs');
 const path = require('path');
 
 const dotenv = require("dotenv");
 const connectDB = require("./src/config/dbConnection");
-// const logger = require('./src/config/logger');
 
 // Load environment variables
 dotenv.config({ path: "../.env" });
