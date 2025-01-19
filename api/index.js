@@ -4,6 +4,18 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 // const db = require("./connection/db");
+const fs = require('fs');
+const path = require('path');
+
+const dotenv = require("dotenv");
+const connectDB = require("./src/config/dbConnection");
+// const logger = require('./src/config/logger');
+
+// Load environment variables
+dotenv.config({ path: "../.env" });
+const logStream = fs.createWriteStream(path.join(__dirname, 'storage/logs/blog_api.log'), { flags: 'a' });
+
+
 
 
 
@@ -16,15 +28,25 @@ const corsOptions = {
 
 // ---------------------------------Enable Libraries ---------------------------
 app.use(cors(corsOptions));
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
+
+
+app.use(morgan('combined', { stream: logStream })); // Logs to file
+app.use(morgan('combined')); // Logs to console
+app.use('/storage/logs', express.static(path.join(__dirname, 'storage/logs')));
 
 //------------------------------------------------------------------------------
 
 //------------------------------- Middlewares -------------------------------
-
+// app.use((req, res, next) => {
+//     logger.info(`Incoming request: ${req.method} ${req.url}`);
+//     next();
+//   });
 
 //------------------------------- db connection -------------------------------
-require("./connection/db");
+// require("./connection/db");
+connectDB();
+
 
 
 
