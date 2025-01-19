@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
 
-const connectDB = require("./src/config/dbConnection");
+// const connectDB = require("./src/config/dbConnection");
 
 // Create a write stream for logging to a file
 const logStream = fs.createWriteStream(path.join(__dirname, "storage/logs/blog_api.log"), { flags: "a" });
@@ -39,6 +39,6 @@ app.get("/api-test", (req, res) => {
 });
 
 // Start server
-app.listen(3000, () => console.log("Server ready on port 3000..."));
+app.listen(4000, () => console.log("Server ready on port 4000..."));
 
 module.exports = app;
