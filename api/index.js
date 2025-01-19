@@ -27,7 +27,7 @@ app.use(morgan("combined")); // Logs to console
 app.use("/storage/logs", express.static(path.join(__dirname, "storage/logs")));
 
 // Database connection
-connectDB();
+// connectDB();
 
 // Routes
 app.get("/", (req, res) => res.send("Blogging API on Vercel, released on 20Th Jan 2025"));
