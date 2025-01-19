@@ -30,7 +30,7 @@ app.use("/storage/logs", express.static(path.join(__dirname, "storage/logs")));
 connectDB();
 
 // Routes
-app.get("/", (req, res) => res.send("Blogging API on Vercel, released on 15th Jan 2025"));
+app.get("/", (req, res) => res.send("Blogging API on Vercel, released on 20Th Jan 2025"));
 
 app.get("/api-test", (req, res) => {
   res.json({
